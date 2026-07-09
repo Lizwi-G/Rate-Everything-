@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>List Your Business — KhethaBiz</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>⭐</text></svg>" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="index.html">
+        <span class="logo-badge">⭐</span>
+        Khetha<span class="biz">Biz</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="businesses.html">Explore Businesses</a></li>
+        <li><a href="register.html">Join as a User</a></li>
+        <li><a href="business-register.html" class="cta-outline active">List Your Business</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ===== Page hero ===== -->
+  <section class="page-hero">
+    <h1>Put Your Business on the Map 🚀</h1>
+    <p>Join hundreds of South African businesses getting discovered and rated by real customers — free.</p>
+  </section>
+
+  <!-- ===== Form ===== -->
+  <div class="form-shell">
+    <div class="form-card">
+
+      <form id="bizForm" novalidate>
+        <div class="form-intro">
+          <div class="form-emoji">🏪</div>
+          <h2>Register Your Business</h2>
+          <p>Fill in your details below — your listing goes live on the directory immediately.</p>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group full">
+            <label for="bizName">Business Name <span class="req">*</span></label>
+            <input type="text" id="bizName" placeholder="e.g. Thandi's Catering & Events" required />
+            <span class="error-msg">Please enter your business name.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="bizCategory">Category <span class="req">*</span></label>
+            <select id="bizCategory" required>
+              <option value="">Select a category...</option>
+            </select>
+            <span class="error-msg">Please select a category.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="bizRegNo">Company Registration No.</label>
+            <input type="text" id="bizRegNo" placeholder="e.g. 2020/123456/07" />
+            <span class="hint">Optional — adds a ✔ Verified badge to your listing.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="bizCity">City / Township <span class="req">*</span></label>
+            <input type="text" id="bizCity" placeholder="e.g. Soweto" required />
+            <span class="error-msg">Please enter your city or township.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="bizProvince">Province <span class="req">*</span></label>
+            <select id="bizProvince" required>
+              <option value="">Select province...</option>
+            </select>
+            <span class="error-msg">Please select your province.</span>
+          </div>
+
+          <div class="form-group full">
+            <label for="bizDescription">Business Description <span class="req">*</span></label>
+            <textarea id="bizDescription" placeholder="Tell customers what makes your business special (max 200 characters)..." maxlength="200" required></textarea>
+            <span class="hint"><span id="descCount">0</span>/200 characters</span>
+            <span class="error-msg">Please describe your business.</span>
+          </div>
+
+          <div class="form-group full">
+            <label for="bizServices">Services Offered <span class="req">*</span></label>
+            <input type="text" id="bizServices" placeholder="Separate with commas e.g. Catering, Events, Decor, Cakes" required />
+            <span class="hint">These become searchable tags on your listing.</span>
+            <span class="error-msg">Please list at least one service.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="bizEmail">Business Email <span class="req">*</span></label>
+            <input type="email" id="bizEmail" placeholder="info@yourbusiness.co.za" required />
+            <span class="error-msg">Please enter a valid email address.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="bizPhone">Business Phone <span class="req">*</span></label>
+            <input type="tel" id="bizPhone" placeholder="e.g. 011 555 0123" required />
+            <span class="error-msg">Please enter a contact number.</span>
+          </div>
+
+          <div class="form-group full">
+            <label for="bizIcon">Pick an Icon for Your Listing</label>
+            <select id="bizIcon">
+              <option value="🏪">🏪 Storefront (default)</option>
+              <option value="🍽️">🍽️ Food & Dining</option>
+              <option value="💇🏾‍♀️">💇🏾‍♀️ Hair & Beauty</option>
+              <option value="🚗">🚗 Automotive</option>
+              <option value="🩺">🩺 Health</option>
+              <option value="💻">💻 Tech</option>
+              <option value="🛍️">🛍️ Retail</option>
+              <option value="🛠️">🛠️ Trades & Services</option>
+              <option value="🧳">🧳 Travel</option>
+              <option value="🎉">🎉 Events</option>
+            </select>
+            <span class="hint">Photo uploads coming in the full version — for now, choose an icon.</span>
+          </div>
+
+          <div class="form-group full">
+            <div class="checkbox-row">
+              <input type="checkbox" id="bizTerms" required />
+              <label for="bizTerms" style="font-weight:600;">
+                I confirm I am authorised to list this business and accept the KhethaBiz Business Terms. <span class="req">*</span>
+              </label>
+            </div>
+            <span class="error-msg">You must accept the terms to continue.</span>
+          </div>
+
+          <div class="form-group full">
+            <button type="submit" class="btn btn-gold btn-block">List My Business — Free 🚀</button>
+          </div>
+        </div>
+
+        <p class="form-footer-note">
+          Just want to rate businesses? <a href="register.html">Create a user account instead →</a>
+        </p>
+      </form>
+
+      <!-- Shown after successful registration -->
+      <div class="success-panel" id="successPanel">
+        <div class="success-icon">🏪</div>
+        <h2>Congratulations — you're listed!</h2>
+        <p><strong id="successBizName"></strong> is now live on the KhethaBiz directory and ready to receive ratings from the community.</p>
+        <a href="businesses.html" class="btn btn-primary" id="viewListingBtn">View My Listing →</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer">
+    <div class="foot-brand">⭐ Khetha<span class="biz">Biz</span></div>
+    <div class="flag-dots">🟢 🟡 ⚫ 🔴 🔵</div>
+    <p>Choose better. Rate smarter. Proudly serving South Africa.</p>
+    <p>© 2026 KhethaBiz (Prototype)</p>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/business-register.js"></script>
+</body>
+</html>

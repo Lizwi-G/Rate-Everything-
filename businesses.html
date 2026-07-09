@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Explore Businesses — KhethaBiz</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>⭐</text></svg>" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="index.html">
+        <span class="logo-badge">⭐</span>
+        Khetha<span class="biz">Biz</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="businesses.html" class="active">Explore Businesses</a></li>
+        <li><a href="register.html">Join as a User</a></li>
+        <li><a href="business-register.html" class="cta-outline">List Your Business</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ===== Page hero ===== -->
+  <section class="page-hero">
+    <h1>Explore South Africa's Businesses 🇿🇦</h1>
+    <p>Search by name or service, filter by category and province, and rate your experiences.</p>
+  </section>
+
+  <!-- ===== Directory ===== -->
+  <section class="section" style="padding-top: 2rem;">
+
+    <div class="toolbar">
+      <div class="field search-field">
+        <span class="icon">🔎</span>
+        <input type="text" id="searchInput" placeholder="Search businesses or services e.g. 'braai', 'geyser', 'wig'..." />
+      </div>
+      <div class="field">
+        <select id="categoryFilter">
+          <option value="">All Categories</option>
+        </select>
+      </div>
+      <div class="field">
+        <select id="provinceFilter">
+          <option value="">All Provinces</option>
+        </select>
+      </div>
+      <div class="field">
+        <select id="sortBy">
+          <option value="rating">Sort: Highest Rated</option>
+          <option value="reviews">Sort: Most Reviewed</option>
+          <option value="name">Sort: Name (A–Z)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="results-info" id="resultsInfo"></div>
+    <div class="biz-grid" id="bizGrid"></div>
+
+    <div class="empty-state" id="emptyState" style="display:none;">
+      <div class="big">🤷🏾</div>
+      <h3>No businesses found</h3>
+      <p>Try a different search term or clear your filters.</p>
+      <p style="margin-top:1rem;">
+        Know a great business that should be here?
+        <a href="business-register.html">List it for free →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== Rating modal ===== -->
+  <div class="modal-overlay" id="rateModal">
+    <div class="modal">
+      <h3 id="modalBizName">Rate this business</h3>
+      <p class="modal-sub" id="modalBizMeta"></p>
+      <div class="star-picker" id="starPicker">
+        <button type="button" data-star="1">★</button>
+        <button type="button" data-star="2">★</button>
+        <button type="button" data-star="3">★</button>
+        <button type="button" data-star="4">★</button>
+        <button type="button" data-star="5">★</button>
+      </div>
+      <div class="star-label" id="starLabel">Tap a star to rate</div>
+      <textarea id="reviewText" placeholder="Tell others about your experience (optional)..."></textarea>
+      <div class="modal-actions">
+        <button class="btn btn-cancel" id="cancelRate">Cancel</button>
+        <button class="btn btn-primary" id="submitRate">Submit Rating</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer">
+    <div class="foot-brand">⭐ Khetha<span class="biz">Biz</span></div>
+    <div class="flag-dots">🟢 🟡 ⚫ 🔴 🔵</div>
+    <p>Choose better. Rate smarter. Proudly serving South Africa.</p>
+    <p>© 2026 KhethaBiz (Prototype)</p>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/businesses.js"></script>
+</body>
+</html>
