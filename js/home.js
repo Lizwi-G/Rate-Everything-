@@ -1,62 +1,87 @@
 /* ============================================================
-   KhethaBiz — Home page
+   Rate Everything — Home page
    Populates category tiles, live stats and top-rated preview.
    ============================================================ */
 
-(function () {
-  const businesses = kbGetAllBusinesses();
+(async function () {
+  const grid = document.getElementById("categoryGrid");
+  const topGrid = document.getElementById("topRatedGrid");
+  grid.innerHTML = reSkeletonTiles(8);
+  topGrid.innerHTML = reSkeletonCards(3);
+
+  let businesses, categories;
+  try {
+    businesses = await reGetBusinesses();
+    categories = await reGetCategories();
+  } catch (err) {
+    const msg = `<div class="empty-state"><div class="big">📡</div><h3>Couldn't reach the server</h3>
+      <p>${reEscape(err.message)}</p>
+      <button class="btn btn-primary" style="margin-top:1rem;" onclick="location.reload()">Try Again</button></div>`;
+    grid.innerHTML = msg;
+    topGrid.innerHTML = "";
+    document.getElementById("statBiz").textContent = "—";
+    document.getElementById("statReviews").textContent = "—";
+    document.getElementById("statCountries").textContent = "—";
+    return;
+  }
 
   /* Category tiles with live counts */
-  const grid = document.getElementById("categoryGrid");
-  grid.innerHTML = KB_CATEGORIES.map(cat => {
+  grid.innerHTML = categories.map(cat => {
     const count = businesses.filter(b => b.category === cat.key).length;
     return `
       <a class="category-tile" href="businesses.html?category=${cat.key}">
         <span class="cat-icon">${cat.icon}</span>
-        ${cat.label}
+        ${reEscape(cat.label)}
         <span class="cat-count">${count} listed</span>
       </a>`;
   }).join("");
+  reReveal(grid);
 
   /* Live stats */
-  const totalRatings = businesses.reduce((sum, b) => sum + kbGetRatingsFor(b).length, 0);
+  const ratingsPerBiz = await Promise.all(businesses.map(b => reGetRatingsFor(b)));
+  const totalRatings = ratingsPerBiz.reduce((sum, ratings) => sum + ratings.length, 0);
+  const countryCount = new Set(businesses.map(b => b.countryCode)).size;
   document.getElementById("statBiz").textContent = businesses.length;
   document.getElementById("statReviews").textContent = totalRatings;
+  document.getElementById("statCountries").textContent = countryCount;
 
   /* Top-rated preview (best 3 by average, min 4 ratings) */
   const top = businesses
-    .map(b => ({ biz: b, ratings: kbGetRatingsFor(b) }))
+    .map((biz, i) => ({ biz, ratings: ratingsPerBiz[i] }))
     .filter(x => x.ratings.length >= 4)
-    .sort((a, b) => kbAverage(b.ratings) - kbAverage(a.ratings))
+    .sort((a, b) => reAverage(b.ratings) - reAverage(a.ratings))
     .slice(0, 3);
 
-  document.getElementById("topRatedGrid").innerHTML = top.map(({ biz, ratings }) => {
-    const cat = kbCategory(biz.category);
-    const avg = kbAverage(ratings);
+  const topCards = await Promise.all(top.map(async ({ biz, ratings }) => {
+    const cat = await reCategoryByKey(biz.category);
+    const country = await reCountryByCode(biz.countryCode);
+    const avg = reAverage(ratings);
     return `
       <div class="biz-card">
-        <div class="biz-cover" style="background:${cat.gradient}">
-          ${biz.icon || cat.icon}
-          ${biz.verified ? '<span class="verified">✔ VERIFIED</span>' : ""}
-        </div>
+        ${reBizCoverHtml(biz, cat)}
         <div class="biz-body">
-          <h3>${kbEscape(biz.name)}</h3>
+          <h3>${reEscape(biz.name)}</h3>
           <div class="biz-meta">
-            <span class="chip">${cat.icon} ${cat.label}</span>
-            <span>📍 ${kbEscape(biz.city)}, ${kbEscape(biz.province)}</span>
+            <span class="chip">${cat.icon} ${reEscape(cat.label)}</span>
+            <span>📍 ${reEscape(biz.city)}${country ? `, ${country.flag} ${reEscape(country.name)}` : ""}</span>
           </div>
-          <p class="biz-desc">${kbEscape(biz.description)}</p>
+          <p class="biz-desc">${reEscape(biz.description)}</p>
           <div class="biz-rating-row">
             <div>
-              <span class="stars">${kbStarsHtml(avg)}</span>
+              <span class="stars">${reStarsHtml(avg)}</span>
               <span class="rating-value">${avg.toFixed(1)}</span>
               <span class="rating-count">(${ratings.length})</span>
             </div>
-            <a class="btn-rate" href="businesses.html?rate=${biz.id}">Rate ⭐</a>
+            <div style="display:flex; gap:0.5rem;">
+              <a class="btn-details" href="businesses.html?details=${biz.id}">Reviews &amp; Map</a>
+              <a class="btn-rate" href="businesses.html?rate=${biz.id}">Rate ⭐</a>
+            </div>
           </div>
         </div>
       </div>`;
-  }).join("");
+  }));
+  topGrid.innerHTML = topCards.join("");
+  reReveal(topGrid);
 
   /* Hero quick-search → businesses page */
   document.getElementById("heroSearchForm").addEventListener("submit", e => {

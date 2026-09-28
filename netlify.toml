@@ -1,0 +1,13 @@
+# Rate Everything is a pure static site (no build tools/bundler) — Netlify
+# just needs to know where the files are. The ASP.NET Core API is deployed
+# separately (see render.yaml); Netlify never builds or runs server/.
+
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

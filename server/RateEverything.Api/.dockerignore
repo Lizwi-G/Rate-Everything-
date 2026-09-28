@@ -1,0 +1,4 @@
+bin/
+obj/
+otp-outbox.log
+appsettings.Development.json

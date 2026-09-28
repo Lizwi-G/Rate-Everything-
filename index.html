@@ -2,9 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <script>(function(){try{var t=localStorage.getItem("rateeverything.theme");if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KhethaBiz — Choose Better. Rate Smarter.</title>
-  <meta name="description" content="KhethaBiz helps South Africans find and rate the best local businesses — from restaurants to plumbers — based on real community reviews." />
+  <title>Rate Everything — Discover It. Try It. Rate It.</title>
+  <meta name="description" content="Rate Everything helps people around the world find and rate the best local businesses — from restaurants to plumbers — based on real community reviews." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>⭐</text></svg>" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
@@ -15,13 +19,13 @@
     <nav class="nav">
       <a class="brand" href="index.html">
         <span class="logo-badge">⭐</span>
-        Khetha<span class="biz">Biz</span>
+        Rate <span class="brand-accent">Everything</span>
       </a>
       <ul class="nav-links">
         <li><a href="index.html" class="active">Home</a></li>
         <li><a href="businesses.html">Explore Businesses</a></li>
-        <li><a href="register.html">Join as a User</a></li>
-        <li><a href="business-register.html" class="cta-outline">List Your Business</a></li>
+        <li><button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button></li>
+        <li id="navAuthSlot"></li>
       </ul>
     </nav>
   </header>
@@ -29,18 +33,18 @@
   <!-- ===== Hero ===== -->
   <section class="hero">
     <div class="hero-inner">
-      <span class="eyebrow">🇿🇦 Proudly South African</span>
+      <span class="eyebrow">🌍 Live in 12+ countries</span>
       <h1>Find the best local businesses,<br /><span class="accent">rated by real people.</span></h1>
       <p class="lead">
-        From the best kota in Soweto to a trustworthy mechanic in Gqeberha —
-        KhethaBiz helps you choose with confidence, powered by honest community ratings.
+        From a favourite kota spot in Soweto to a trusted barber in Brooklyn —
+        Rate Everything helps you choose with confidence, powered by honest community ratings, anywhere in the world.
       </p>
       <div class="hero-actions">
         <a href="businesses.html" class="btn btn-gold">🔎 Explore Businesses</a>
         <a href="register.html" class="btn btn-ghost">Create Free Account</a>
       </div>
       <form class="hero-search" id="heroSearchForm">
-        <input type="text" id="heroSearch" placeholder="Try 'plumber', 'braai', 'hair salon'..." aria-label="Search businesses" />
+        <input type="text" id="heroSearch" placeholder="Try 'plumber', 'sushi', 'hair salon'..." aria-label="Search businesses" />
         <button type="submit" class="btn btn-primary">Search</button>
       </form>
     </div>
@@ -50,7 +54,7 @@
   <div class="stats-strip">
     <div class="stat-card"><div class="num" id="statBiz">0</div><div class="lbl">Listed Businesses</div></div>
     <div class="stat-card"><div class="num" id="statReviews">0</div><div class="lbl">Community Ratings</div></div>
-    <div class="stat-card"><div class="num">9</div><div class="lbl">Provinces Covered</div></div>
+    <div class="stat-card"><div class="num" id="statCountries">0</div><div class="lbl">Countries Covered</div></div>
     <div class="stat-card"><div class="num">100%</div><div class="lbl">Free for Users</div></div>
   </div>
 
@@ -58,8 +62,8 @@
   <section class="section">
     <div class="section-head">
       <span class="kicker">Browse by category</span>
-      <h2>Whatever you need, Mzansi has it</h2>
-      <p>Pick a category to see top-rated businesses near you.</p>
+      <h2>Whatever you need, find it here</h2>
+      <p>Pick a category to see top-rated businesses near you — anywhere on the map.</p>
     </div>
     <div class="category-grid" id="categoryGrid"></div>
   </section>
@@ -74,7 +78,7 @@
       <div class="step-card">
         <div class="step-num">1</div>
         <h3>Search &amp; Discover</h3>
-        <p>Search by name, service or category and filter by province to find exactly what you need, wherever you are in South Africa.</p>
+        <p>Search by name, service or category and filter by country to find exactly what you need, wherever you are.</p>
       </div>
       <div class="step-card">
         <div class="step-num">2</div>
@@ -84,7 +88,7 @@
       <div class="step-card">
         <div class="step-num">3</div>
         <h3>Rate Your Experience</h3>
-        <p>Had a great (or not-so-great) experience? Leave a rating in seconds and help the next person choose better.</p>
+        <p>Had a great (or not-so-great) experience? Log in and leave a rating in seconds to help the next person choose better.</p>
       </div>
     </div>
   </section>
@@ -105,21 +109,22 @@
   <section class="section" style="padding-top: 0;">
     <div class="cta-band">
       <h2>Own a business? Get discovered. 🚀</h2>
-      <p>List your business on KhethaBiz for free and let your happy customers do the talking.</p>
+      <p>List your business on Rate Everything for free and let your happy customers do the talking — wherever in the world you are.</p>
       <a href="business-register.html" class="btn btn-gold">List Your Business Now</a>
     </div>
   </section>
 
   <!-- ===== Footer ===== -->
   <footer class="site-footer">
-    <div class="foot-brand">⭐ Khetha<span class="biz">Biz</span></div>
-    <div class="flag-dots">🟢 🟡 ⚫ 🔴 🔵</div>
-    <p>Choose better. Rate smarter. Proudly serving South Africa.</p>
-    <p>© 2026 KhethaBiz (Prototype) — Built for the people, by the people.</p>
+    <div class="foot-brand">⭐ Rate <span class="brand-accent">Everything</span></div>
+    <div class="globe-dots">🌍 ⭐ 🌎 ⭐ 🌏</div>
+    <p>Discover it. Try it. Rate it. Built for every city, on every continent.</p>
+    <p>© 2026 Rate Everything (Prototype) — Built for the people, by the people.</p>
   </footer>
 
-  <script src="js/data.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/auth.js"></script>
   <script src="js/home.js"></script>
 </body>
 </html>

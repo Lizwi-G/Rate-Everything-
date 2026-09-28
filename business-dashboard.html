@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <script>(function(){try{var t=localStorage.getItem("rateeverything.theme");if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Business — Rate Everything</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>⭐</text></svg>" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="index.html">
+        <span class="logo-badge">⭐</span>
+        Rate <span class="brand-accent">Everything</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="businesses.html">Explore Businesses</a></li>
+        <li><button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button></li>
+        <li id="navAuthSlot"></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ===== Page hero ===== -->
+  <section class="page-hero" style="padding-bottom: 4.5rem;">
+    <h1>My Business Dashboard 🏪</h1>
+    <p>Manage your listing and see what customers are saying.</p>
+  </section>
+
+  <!-- ===== Dashboard ===== -->
+  <div class="dash-shell" id="dashShell" style="display:none;">
+
+    <div class="dash-card">
+      <div class="dash-header">
+        <div style="display:flex; align-items:center; gap:1rem;">
+          <div class="thumb-cover lg" id="dashCoverThumb"></div>
+          <div>
+            <h2 id="bizNameHeading">Your listing</h2>
+            <p id="bizMetaLine" style="color:var(--ink-400); font-size:0.9rem;"></p>
+          </div>
+        </div>
+        <div>
+          <span class="badge" id="verifiedBadge"></span>
+        </div>
+      </div>
+      <div class="admin-stats-grid" style="margin-top:1.4rem;">
+        <div class="stat-card"><div class="num" id="dashAvg">0.0</div><div class="lbl">Average Rating</div></div>
+        <div class="stat-card"><div class="num" id="dashReviewCount">0</div><div class="lbl">Reviews</div></div>
+        <div class="stat-card"><div class="num" id="dashViewsNote">🔗</div><div class="lbl"><a href="#" id="viewPublicListing">View Public Listing</a></div></div>
+      </div>
+    </div>
+
+    <div class="dash-card">
+      <h2>Edit Listing</h2>
+      <form id="editBizForm" novalidate>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label for="editImage">Business Photo</label>
+            <input type="file" id="editImage" accept="image/*" />
+            <span class="hint">Upload a new photo to replace your current cover image.</span>
+            <div class="image-upload-preview" id="editImagePreviewWrap" style="display:none;">
+              <img id="editImagePreview" alt="Preview" />
+              <button type="button" class="icon-btn danger" id="editImageRemove">Remove Photo</button>
+            </div>
+          </div>
+
+          <div class="form-group full">
+            <label for="editName">Business Name <span class="req">*</span></label>
+            <input type="text" id="editName" required />
+            <span class="error-msg">Please enter your business name.</span>
+          </div>
+          <div class="form-group">
+            <label for="editCategory">Category <span class="req">*</span></label>
+            <select id="editCategory" required></select>
+          </div>
+          <div class="form-group">
+            <label for="editCity">City / Town <span class="req">*</span></label>
+            <input type="text" id="editCity" required />
+            <span class="error-msg">Please enter your city or town.</span>
+          </div>
+          <div class="form-group full">
+            <label for="editDescription">Description <span class="req">*</span></label>
+            <textarea id="editDescription" maxlength="200" required></textarea>
+            <span class="error-msg">Please describe your business.</span>
+          </div>
+          <div class="form-group full">
+            <label for="editServices">Services Offered <span class="req">*</span></label>
+            <input type="text" id="editServices" required />
+            <span class="hint">Separate with commas.</span>
+          </div>
+          <div class="form-group">
+            <label for="editEmail">Business Email <span class="req">*</span></label>
+            <input type="email" id="editEmail" required />
+            <span class="error-msg">Please enter a valid email address.</span>
+          </div>
+          <div class="form-group">
+            <label for="editPhone">Business Phone <span class="req">*</span></label>
+            <input type="tel" id="editPhone" required />
+            <span class="error-msg">Please enter a contact number.</span>
+          </div>
+          <div class="form-group full">
+            <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="dash-card">
+      <h2>Reviews From Customers</h2>
+      <div id="reviewsList"></div>
+    </div>
+
+  </div>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer">
+    <div class="foot-brand">⭐ Rate <span class="brand-accent">Everything</span></div>
+    <div class="globe-dots">🌍 ⭐ 🌎 ⭐ 🌏</div>
+    <p>Discover it. Try it. Rate it. Built for every city, on every continent.</p>
+    <p>© 2026 Rate Everything (Prototype)</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/business-dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+# In the Render dashboard: New > Blueprint > connect this repo. Render reads
+# this file and creates the service below. Env vars marked `sync: false`
+# are prompted for in the dashboard (never committed) — see README for
+# exactly what to paste into each one.
+
+services:
+  - type: web
+    name: rate-everything-api
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./server/RateEverything.Api/Dockerfile
+    dockerContext: ./server/RateEverything.Api
+    healthCheckPath: /health
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      # Full Supabase connection string (direct connection, port 5432) —
+      # same value you set locally via `dotnet user-secrets set`.
+      - key: ConnectionStrings__Default
+        sync: false
+      - key: Jwt__Issuer
+        value: RateEverything.Api
+      - key: Jwt__Audience
+        value: RateEverything.Client
+      # Render generates a strong random value for this on first deploy.
+      - key: Jwt__Secret
+        generateValue: true
+      # Your deployed Netlify URL(s), comma-separated if more than one
+      # (e.g. the production domain + a Netlify deploy-preview URL).
+      - key: Cors__AllowedOrigins
+        sync: false

@@ -1,0 +1,14 @@
+# .NET build output
+bin/
+obj/
+
+# .NET user secrets / local overrides
+appsettings.*.local.json
+*.user
+
+# OTP stub email log (local dev artifact)
+server/RateEverything.Api/otp-outbox.log
+
+# OS/editor cruft
+.DS_Store
+Thumbs.db

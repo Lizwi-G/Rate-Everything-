@@ -1,0 +1,10 @@
+[
+  { "key": "restaurants", "label": "Restaurants & Food", "icon": "🍽️", "color": "#e96443" },
+  { "key": "beauty", "label": "Beauty & Salons", "icon": "💇🏾‍♀️", "color": "#f857a6" },
+  { "key": "automotive", "label": "Automotive", "icon": "🚗", "color": "#36d1dc" },
+  { "key": "health", "label": "Health & Wellness", "icon": "🩺", "color": "#11998e" },
+  { "key": "tech", "label": "Tech & Repairs", "icon": "💻", "color": "#8e2de2" },
+  { "key": "retail", "label": "Retail & Shopping", "icon": "🛍️", "color": "#f7971e" },
+  { "key": "home", "label": "Home Services", "icon": "🛠️", "color": "#396afc" },
+  { "key": "travel", "label": "Travel & Stays", "icon": "🧳", "color": "#0f9b8e" }
+]

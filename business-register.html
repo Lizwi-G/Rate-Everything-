@@ -2,8 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <script>(function(){try{var t=localStorage.getItem("rateeverything.theme");if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>List Your Business — KhethaBiz</title>
+  <title>List Your Business — Rate Everything</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>⭐</text></svg>" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
@@ -14,13 +18,13 @@
     <nav class="nav">
       <a class="brand" href="index.html">
         <span class="logo-badge">⭐</span>
-        Khetha<span class="biz">Biz</span>
+        Rate <span class="brand-accent">Everything</span>
       </a>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="businesses.html">Explore Businesses</a></li>
-        <li><a href="register.html">Join as a User</a></li>
-        <li><a href="business-register.html" class="cta-outline active">List Your Business</a></li>
+        <li><button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button></li>
+        <li id="navAuthSlot"></li>
       </ul>
     </nav>
   </header>
@@ -28,7 +32,7 @@
   <!-- ===== Page hero ===== -->
   <section class="page-hero">
     <h1>Put Your Business on the Map 🚀</h1>
-    <p>Join hundreds of South African businesses getting discovered and rated by real customers — free.</p>
+    <p>Join businesses across the globe getting discovered and rated by real customers — free.</p>
   </section>
 
   <!-- ===== Form ===== -->
@@ -64,17 +68,27 @@
           </div>
 
           <div class="form-group">
-            <label for="bizCity">City / Township <span class="req">*</span></label>
-            <input type="text" id="bizCity" placeholder="e.g. Soweto" required />
-            <span class="error-msg">Please enter your city or township.</span>
+            <label for="bizCountry">Country <span class="req">*</span></label>
+            <select id="bizCountry" required>
+              <option value="">Select country...</option>
+            </select>
+            <span class="error-msg">Please select a country.</span>
           </div>
 
           <div class="form-group">
-            <label for="bizProvince">Province <span class="req">*</span></label>
-            <select id="bizProvince" required>
-              <option value="">Select province...</option>
+            <label for="bizRegion">Region / Province / State <span class="req">*</span></label>
+            <select id="bizRegion" required disabled>
+              <option value="">Select a country first...</option>
             </select>
-            <span class="error-msg">Please select your province.</span>
+            <span class="error-msg">Please select your region.</span>
+          </div>
+
+          <div class="form-group full">
+            <label for="bizCity">City / Town <span class="req">*</span></label>
+            <input type="text" id="bizCity" placeholder="e.g. Soweto" list="bizCityOptions" required />
+            <datalist id="bizCityOptions"></datalist>
+            <span class="hint">Pick a suggestion or type your city — every city in the world is welcome.</span>
+            <span class="error-msg">Please enter your city or town.</span>
           </div>
 
           <div class="form-group full">
@@ -93,18 +107,41 @@
 
           <div class="form-group">
             <label for="bizEmail">Business Email <span class="req">*</span></label>
-            <input type="email" id="bizEmail" placeholder="info@yourbusiness.co.za" required />
+            <input type="email" id="bizEmail" placeholder="info@yourbusiness.com" required />
             <span class="error-msg">Please enter a valid email address.</span>
           </div>
 
           <div class="form-group">
             <label for="bizPhone">Business Phone <span class="req">*</span></label>
-            <input type="tel" id="bizPhone" placeholder="e.g. 011 555 0123" required />
+            <input type="tel" id="bizPhone" placeholder="e.g. +1 555 0123" required />
             <span class="error-msg">Please enter a contact number.</span>
           </div>
 
+          <div class="form-group">
+            <label for="bizPassword">Account Password <span class="req">*</span></label>
+            <input type="password" id="bizPassword" placeholder="Minimum 8 characters" minlength="8" required />
+            <span class="hint">Used to log in and manage your listing.</span>
+            <span class="error-msg">Password must be at least 8 characters.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="bizConfirmPassword">Confirm Password <span class="req">*</span></label>
+            <input type="password" id="bizConfirmPassword" data-match="#bizPassword" placeholder="Re-enter your password" required />
+            <span class="error-msg">Passwords do not match.</span>
+          </div>
+
           <div class="form-group full">
-            <label for="bizIcon">Pick an Icon for Your Listing</label>
+            <label for="bizImage">Business Photo</label>
+            <input type="file" id="bizImage" accept="image/*" />
+            <span class="hint">Optional — JPG or PNG. This becomes your listing's cover photo.</span>
+            <div class="image-upload-preview" id="bizImagePreviewWrap" style="display:none;">
+              <img id="bizImagePreview" alt="Preview" />
+              <button type="button" class="icon-btn danger" id="bizImageRemove">Remove Photo</button>
+            </div>
+          </div>
+
+          <div class="form-group full">
+            <label for="bizIcon">Pick a Fallback Icon</label>
             <select id="bizIcon">
               <option value="🏪">🏪 Storefront (default)</option>
               <option value="🍽️">🍽️ Food & Dining</option>
@@ -117,14 +154,14 @@
               <option value="🧳">🧳 Travel</option>
               <option value="🎉">🎉 Events</option>
             </select>
-            <span class="hint">Photo uploads coming in the full version — for now, choose an icon.</span>
+            <span class="hint">Shown until you upload a photo — or if you skip the upload entirely.</span>
           </div>
 
           <div class="form-group full">
             <div class="checkbox-row">
               <input type="checkbox" id="bizTerms" required />
               <label for="bizTerms" style="font-weight:600;">
-                I confirm I am authorised to list this business and accept the KhethaBiz Business Terms. <span class="req">*</span>
+                I confirm I am authorised to list this business and accept the Rate Everything Business Terms. <span class="req">*</span>
               </label>
             </div>
             <span class="error-msg">You must accept the terms to continue.</span>
@@ -136,16 +173,48 @@
         </div>
 
         <p class="form-footer-note">
+          Already listed? <a href="login.html">Log in here →</a><br />
           Just want to rate businesses? <a href="register.html">Create a user account instead →</a>
         </p>
       </form>
 
-      <!-- Shown after successful registration -->
+      <!-- Shown after submitting the form, before the listing is actually created -->
+      <div class="otp-panel" id="otpPanel">
+        <div class="form-intro">
+          <div class="form-emoji">📧</div>
+          <h2>Verify Your Email</h2>
+          <p>Enter the 6-digit code we sent to <strong id="otpEmailTarget"></strong>.</p>
+        </div>
+
+        <div class="demo-hint">
+          🔧 Prototype note: no email server is connected, so instead of emailing it, your code is shown right here: <code id="otpDevCode"></code>
+        </div>
+
+        <form id="otpForm" novalidate style="margin-top:1.4rem;">
+          <div class="form-grid">
+            <div class="form-group full">
+              <label for="otpCodeInput">Verification Code</label>
+              <input type="text" id="otpCodeInput" class="otp-input" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="000000" autocomplete="one-time-code" required />
+              <span class="error-msg" id="otpError"></span>
+            </div>
+            <div class="form-group full">
+              <button type="submit" class="btn btn-gold btn-block">Verify &amp; List My Business</button>
+            </div>
+          </div>
+        </form>
+
+        <p class="form-footer-note">
+          Didn't get a code? <button type="button" class="link-btn" id="otpResendBtn">Resend Code</button><br />
+          Wrong email? <button type="button" class="link-btn" id="otpBackBtn">Use a different email</button>
+        </p>
+      </div>
+
+      <!-- Shown after successful verification -->
       <div class="success-panel" id="successPanel">
         <div class="success-icon">🏪</div>
         <h2>Congratulations — you're listed!</h2>
-        <p><strong id="successBizName"></strong> is now live on the KhethaBiz directory and ready to receive ratings from the community.</p>
-        <a href="businesses.html" class="btn btn-primary" id="viewListingBtn">View My Listing →</a>
+        <p><strong id="successBizName"></strong> is now live on Rate Everything and ready to receive ratings from the community. You're logged in — head to your dashboard any time.</p>
+        <a href="business-dashboard.html" class="btn btn-primary" id="viewListingBtn">Go to My Dashboard →</a>
       </div>
 
     </div>
@@ -153,14 +222,15 @@
 
   <!-- ===== Footer ===== -->
   <footer class="site-footer">
-    <div class="foot-brand">⭐ Khetha<span class="biz">Biz</span></div>
-    <div class="flag-dots">🟢 🟡 ⚫ 🔴 🔵</div>
-    <p>Choose better. Rate smarter. Proudly serving South Africa.</p>
-    <p>© 2026 KhethaBiz (Prototype)</p>
+    <div class="foot-brand">⭐ Rate <span class="brand-accent">Everything</span></div>
+    <div class="globe-dots">🌍 ⭐ 🌎 ⭐ 🌏</div>
+    <p>Discover it. Try it. Rate it. Built for every city, on every continent.</p>
+    <p>© 2026 Rate Everything (Prototype)</p>
   </footer>
 
-  <script src="js/data.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/auth.js"></script>
   <script src="js/business-register.js"></script>
 </body>
 </html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <script>(function(){try{var t=localStorage.getItem("rateeverything.theme");if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — Rate Everything</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>⭐</text></svg>" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="index.html">
+        <span class="logo-badge">⭐</span>
+        Rate <span class="brand-accent">Everything</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="businesses.html">Explore Businesses</a></li>
+        <li><button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button></li>
+        <li id="navAuthSlot"></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ===== Page hero ===== -->
+  <section class="page-hero" style="padding-bottom: 4.5rem;">
+    <h1>Admin Dashboard 👑</h1>
+    <p>Manage categories, global locations, businesses, users and reviews.</p>
+  </section>
+
+  <!-- ===== Dashboard shell ===== -->
+  <div class="admin-shell" id="adminShell" style="display:none;">
+    <aside class="admin-sidebar" id="adminSidebar">
+      <button type="button" class="admin-nav-item active" data-panel="overview">📊 Overview</button>
+      <button type="button" class="admin-nav-item" data-panel="categories">🏷️ Categories</button>
+      <button type="button" class="admin-nav-item" data-panel="countries">🌍 Countries</button>
+      <button type="button" class="admin-nav-item" data-panel="regions">🗺️ Regions / States</button>
+      <button type="button" class="admin-nav-item" data-panel="cities">🏙️ Cities</button>
+      <button type="button" class="admin-nav-item" data-panel="businesses">🏪 Businesses</button>
+      <button type="button" class="admin-nav-item" data-panel="users">👥 Users</button>
+      <button type="button" class="admin-nav-item" data-panel="reviews">⭐ Reviews</button>
+    </aside>
+
+    <main class="admin-content">
+      <!-- Overview -->
+      <section class="admin-panel active" id="panel-overview">
+        <div class="admin-panel-head">
+          <div>
+            <h2>Overview</h2>
+            <p>Live snapshot of the whole platform.</p>
+          </div>
+        </div>
+        <div class="admin-stats-grid" id="overviewStats"></div>
+      </section>
+
+      <!-- Categories -->
+      <section class="admin-panel" id="panel-categories">
+        <div class="admin-panel-head">
+          <div>
+            <h2>Categories</h2>
+            <p>Business categories shown across the site.</p>
+          </div>
+          <button type="button" class="btn btn-primary" data-add="category">+ Add Category</button>
+        </div>
+        <div class="table-wrap"><table class="data-table" id="categoriesTable"></table></div>
+      </section>
+
+      <!-- Countries -->
+      <section class="admin-panel" id="panel-countries">
+        <div class="admin-panel-head">
+          <div>
+            <h2>Countries</h2>
+            <p>Every country businesses and users can register under.</p>
+          </div>
+          <button type="button" class="btn btn-primary" data-add="country">+ Add Country</button>
+        </div>
+        <div class="table-wrap"><table class="data-table" id="countriesTable"></table></div>
+      </section>
+
+      <!-- Regions -->
+      <section class="admin-panel" id="panel-regions">
+        <div class="admin-panel-head">
+          <div>
+            <h2>Regions / Provinces / States</h2>
+            <p>The layer between a country and a city.</p>
+          </div>
+          <button type="button" class="btn btn-primary" data-add="region">+ Add Region</button>
+        </div>
+        <div class="table-wrap"><table class="data-table" id="regionsTable"></table></div>
+      </section>
+
+      <!-- Cities -->
+      <section class="admin-panel" id="panel-cities">
+        <div class="admin-panel-head">
+          <div>
+            <h2>Cities</h2>
+            <p>Suggested cities shown while registering a business.</p>
+          </div>
+          <button type="button" class="btn btn-primary" data-add="city">+ Add City</button>
+        </div>
+        <div class="table-wrap"><table class="data-table" id="citiesTable"></table></div>
+      </section>
+
+      <!-- Businesses -->
+      <section class="admin-panel" id="panel-businesses">
+        <div class="admin-panel-head">
+          <div>
+            <h2>Businesses</h2>
+            <p>Every listed business, seeded or self-registered.</p>
+          </div>
+        </div>
+        <div class="table-wrap"><table class="data-table" id="businessesTable"></table></div>
+      </section>
+
+      <!-- Users -->
+      <section class="admin-panel" id="panel-users">
+        <div class="admin-panel-head">
+          <div>
+            <h2>Users</h2>
+            <p>Everyone with a rating account.</p>
+          </div>
+        </div>
+        <div class="table-wrap"><table class="data-table" id="usersTable"></table></div>
+      </section>
+
+      <!-- Reviews -->
+      <section class="admin-panel" id="panel-reviews">
+        <div class="admin-panel-head">
+          <div>
+            <h2>Reviews</h2>
+            <p>Moderate ratings submitted across the platform.</p>
+          </div>
+        </div>
+        <div class="table-wrap"><table class="data-table" id="reviewsTable"></table></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ===== Add/Edit modal (content injected per entity type) ===== -->
+  <div class="modal-overlay" id="adminModal">
+    <div class="modal">
+      <h3 id="adminModalTitle">Add</h3>
+      <form id="adminModalForm">
+        <div class="form-grid" id="adminModalBody"></div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-cancel" id="adminModalCancel">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer">
+    <div class="foot-brand">⭐ Rate <span class="brand-accent">Everything</span></div>
+    <div class="globe-dots">🌍 ⭐ 🌎 ⭐ 🌏</div>
+    <p>Discover it. Try it. Rate it. Built for every city, on every continent.</p>
+    <p>© 2026 Rate Everything (Prototype)</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

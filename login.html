@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <script>(function(){try{var t=localStorage.getItem("rateeverything.theme");if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Log In — Rate Everything</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>⭐</text></svg>" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="index.html">
+        <span class="logo-badge">⭐</span>
+        Rate <span class="brand-accent">Everything</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="businesses.html">Explore Businesses</a></li>
+        <li><button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button></li>
+        <li id="navAuthSlot"></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ===== Page hero ===== -->
+  <section class="page-hero">
+    <h1>Welcome Back 👋</h1>
+    <p>Log in to rate businesses or manage your business listing.</p>
+  </section>
+
+  <!-- ===== Form ===== -->
+  <div class="form-shell">
+    <div class="form-card">
+
+      <div class="form-intro">
+        <div class="form-emoji">🔑</div>
+        <h2>Log In</h2>
+        <p>Choose the account type below.</p>
+      </div>
+
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab active" data-tab="user">I'm a User</button>
+        <button type="button" class="auth-tab" data-tab="business">I'm a Business</button>
+      </div>
+
+      <!-- User login -->
+      <div class="auth-panel active" id="userPanel">
+        <form id="userLoginForm" novalidate>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label for="userEmail">Email Address <span class="req">*</span></label>
+              <input type="email" id="userEmail" placeholder="you@example.com" required />
+              <span class="error-msg">Please enter a valid email address.</span>
+            </div>
+            <div class="form-group full">
+              <label for="userPassword">Password <span class="req">*</span></label>
+              <input type="password" id="userPassword" placeholder="Your password" required />
+              <span class="error-msg">Please enter your password.</span>
+            </div>
+            <div class="form-group full">
+              <button type="submit" class="btn btn-primary btn-block">Log In</button>
+            </div>
+          </div>
+        </form>
+        <p class="form-footer-note">
+          New here? <a href="register.html">Create a free user account →</a>
+        </p>
+      </div>
+
+      <!-- Business login -->
+      <div class="auth-panel" id="businessPanel">
+        <form id="businessLoginForm" novalidate>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label for="bizLoginEmail">Business Email <span class="req">*</span></label>
+              <input type="email" id="bizLoginEmail" placeholder="info@yourbusiness.com" required />
+              <span class="error-msg">Please enter a valid email address.</span>
+            </div>
+            <div class="form-group full">
+              <label for="bizLoginPassword">Password <span class="req">*</span></label>
+              <input type="password" id="bizLoginPassword" placeholder="Your password" required />
+              <span class="error-msg">Please enter your password.</span>
+            </div>
+            <div class="form-group full">
+              <button type="submit" class="btn btn-gold btn-block">Log In</button>
+            </div>
+          </div>
+        </form>
+        <p class="form-footer-note">
+          Not listed yet? <a href="business-register.html">List your business for free →</a>
+        </p>
+      </div>
+
+      <div class="demo-hint">
+        Demo admin login — email <code>admin@rateeverything.com</code>, password <code>Admin@123</code>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer">
+    <div class="foot-brand">⭐ Rate <span class="brand-accent">Everything</span></div>
+    <div class="globe-dots">🌍 ⭐ 🌎 ⭐ 🌏</div>
+    <p>Discover it. Try it. Rate it. Built for every city, on every continent.</p>
+    <p>© 2026 Rate Everything (Prototype)</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

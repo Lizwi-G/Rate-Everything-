@@ -2,8 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <script>(function(){try{var t=localStorage.getItem("rateeverything.theme");if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Join as a User — KhethaBiz</title>
+  <title>Join as a User — Rate Everything</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>⭐</text></svg>" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
@@ -14,21 +18,21 @@
     <nav class="nav">
       <a class="brand" href="index.html">
         <span class="logo-badge">⭐</span>
-        Khetha<span class="biz">Biz</span>
+        Rate <span class="brand-accent">Everything</span>
       </a>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="businesses.html">Explore Businesses</a></li>
-        <li><a href="register.html" class="active">Join as a User</a></li>
-        <li><a href="business-register.html" class="cta-outline">List Your Business</a></li>
+        <li><button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button></li>
+        <li id="navAuthSlot"></li>
       </ul>
     </nav>
   </header>
 
   <!-- ===== Page hero ===== -->
   <section class="page-hero">
-    <h1>Join the KhethaBiz Community 🙌🏾</h1>
-    <p>Create your free account to rate businesses, save favourites and help Mzansi choose better.</p>
+    <h1>Join the Rate Everything Community 🙌</h1>
+    <p>Create your free account to rate businesses, save favourites and help the world choose better.</p>
   </section>
 
   <!-- ===== Form ===== -->
@@ -57,7 +61,7 @@
 
           <div class="form-group full">
             <label for="email">Email Address <span class="req">*</span></label>
-            <input type="email" id="email" placeholder="you@example.co.za" required />
+            <input type="email" id="email" placeholder="you@example.com" required />
             <span class="error-msg">Please enter a valid email address.</span>
           </div>
 
@@ -68,11 +72,19 @@
           </div>
 
           <div class="form-group">
-            <label for="province">Province <span class="req">*</span></label>
-            <select id="province" required>
-              <option value="">Select your province...</option>
+            <label for="country">Country <span class="req">*</span></label>
+            <select id="country" required>
+              <option value="">Select country...</option>
             </select>
-            <span class="error-msg">Please select your province.</span>
+            <span class="error-msg">Please select your country.</span>
+          </div>
+
+          <div class="form-group full">
+            <label for="region">Region / Province / State <span class="req">*</span></label>
+            <select id="region" required disabled>
+              <option value="">Select a country first...</option>
+            </select>
+            <span class="error-msg">Please select your region.</span>
           </div>
 
           <div class="form-group">
@@ -91,7 +103,7 @@
             <div class="checkbox-row">
               <input type="checkbox" id="terms" required />
               <label for="terms" style="font-weight:600;">
-                I agree to the KhethaBiz Terms of Service and understand my ratings will be public. <span class="req">*</span>
+                I agree to the Rate Everything Terms of Service and understand my ratings will be public. <span class="req">*</span>
               </label>
             </div>
             <span class="error-msg">You must accept the terms to continue.</span>
@@ -103,15 +115,47 @@
         </div>
 
         <p class="form-footer-note">
+          Already have an account? <a href="login.html">Log in here →</a><br />
           Own a business instead? <a href="business-register.html">List your business here →</a>
         </p>
       </form>
 
-      <!-- Shown after successful registration -->
+      <!-- Shown after submitting the form, before the account is actually created -->
+      <div class="otp-panel" id="otpPanel">
+        <div class="form-intro">
+          <div class="form-emoji">📧</div>
+          <h2>Verify Your Email</h2>
+          <p>Enter the 6-digit code we sent to <strong id="otpEmailTarget"></strong>.</p>
+        </div>
+
+        <div class="demo-hint">
+          🔧 Prototype note: no email server is connected, so instead of emailing it, your code is shown right here: <code id="otpDevCode"></code>
+        </div>
+
+        <form id="otpForm" novalidate style="margin-top:1.4rem;">
+          <div class="form-grid">
+            <div class="form-group full">
+              <label for="otpCodeInput">Verification Code</label>
+              <input type="text" id="otpCodeInput" class="otp-input" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="000000" autocomplete="one-time-code" required />
+              <span class="error-msg" id="otpError"></span>
+            </div>
+            <div class="form-group full">
+              <button type="submit" class="btn btn-primary btn-block">Verify &amp; Create Account</button>
+            </div>
+          </div>
+        </form>
+
+        <p class="form-footer-note">
+          Didn't get a code? <button type="button" class="link-btn" id="otpResendBtn">Resend Code</button><br />
+          Wrong email? <button type="button" class="link-btn" id="otpBackBtn">Use a different email</button>
+        </p>
+      </div>
+
+      <!-- Shown after successful verification -->
       <div class="success-panel" id="successPanel">
         <div class="success-icon">🎉</div>
-        <h2>Welcome to KhethaBiz, <span id="welcomeName"></span>!</h2>
-        <p>Your account has been created. You're ready to start discovering and rating South Africa's best businesses.</p>
+        <h2>Welcome to Rate Everything, <span id="welcomeName"></span>!</h2>
+        <p>Your account has been created and you're logged in. You're ready to start discovering and rating the world's best businesses.</p>
         <a href="businesses.html" class="btn btn-gold">Start Exploring Businesses →</a>
       </div>
 
@@ -120,14 +164,15 @@
 
   <!-- ===== Footer ===== -->
   <footer class="site-footer">
-    <div class="foot-brand">⭐ Khetha<span class="biz">Biz</span></div>
-    <div class="flag-dots">🟢 🟡 ⚫ 🔴 🔵</div>
-    <p>Choose better. Rate smarter. Proudly serving South Africa.</p>
-    <p>© 2026 KhethaBiz (Prototype)</p>
+    <div class="foot-brand">⭐ Rate <span class="brand-accent">Everything</span></div>
+    <div class="globe-dots">🌍 ⭐ 🌎 ⭐ 🌏</div>
+    <p>Discover it. Try it. Rate it. Built for every city, on every continent.</p>
+    <p>© 2026 Rate Everything (Prototype)</p>
   </footer>
 
-  <script src="js/data.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/auth.js"></script>
   <script src="js/register.js"></script>
 </body>
 </html>
