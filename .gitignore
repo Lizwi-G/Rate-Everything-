@@ -12,3 +12,6 @@ server/RateEverything.Api/otp-outbox.log
 # OS/editor cruft
 .DS_Store
 Thumbs.db
+
+# Visual Studio cache/options
+.vs/

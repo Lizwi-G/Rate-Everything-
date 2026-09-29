@@ -211,7 +211,7 @@ namespace RateEverything.Api.Migrations
                 table: "Businesses",
                 column: "Email",
                 unique: true,
-                filter: "[Email] IS NOT NULL");
+                filter: "\"Email\" IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BusinessServices_BusinessId",

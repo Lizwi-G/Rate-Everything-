@@ -122,7 +122,7 @@ namespace RateEverything.Api.Migrations
 
                     b.HasIndex("Email")
                         .IsUnique()
-                        .HasFilter("[Email] IS NOT NULL");
+                        .HasFilter("\"Email\" IS NOT NULL");
 
                     b.ToTable("Businesses");
                 });

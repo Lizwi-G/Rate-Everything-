@@ -27,7 +27,7 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<AppUser>().HasKey(u => u.Id);
         modelBuilder.Entity<AppUser>().HasIndex(u => u.Email).IsUnique();
         modelBuilder.Entity<Business>().HasKey(b => b.Id);
-        modelBuilder.Entity<Business>().HasIndex(b => b.Email).IsUnique().HasFilter("[Email] IS NOT NULL");
+        modelBuilder.Entity<Business>().HasIndex(b => b.Email).IsUnique().HasFilter("\"Email\" IS NOT NULL");
         modelBuilder.Entity<Review>().HasKey(r => r.Id);
         modelBuilder.Entity<PendingVerification>().HasKey(p => p.Id);
 
